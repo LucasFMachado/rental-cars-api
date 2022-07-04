@@ -12,8 +12,8 @@ interface IImportCategory {
 @injectable()
 class ImportCategoryService {
   constructor(
-    @inject("CategoriesRepository")
-    private categoriesRepository: CategoriesRepository
+    @inject('CategoriesRepository')
+    private categoriesRepository: CategoriesRepository,
   ) {}
 
   loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
@@ -34,7 +34,7 @@ class ImportCategoryService {
           });
         })
         .on('end', () => {
-          fs.promises.unlink(file.path)
+          fs.promises.unlink(file.path);
           resolve(categories);
         })
         .on('error', (err) => {

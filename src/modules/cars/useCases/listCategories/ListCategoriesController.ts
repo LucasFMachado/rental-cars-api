@@ -5,8 +5,7 @@ import { ListCategoriesService } from './ListCategoriesService';
 
 class ListCategoriesController {
   async handle(request: Request, response: Response): Promise<Response> {
-
-    const listCategoriesService = container.resolve(ListCategoriesService)
+    const listCategoriesService = container.resolve(ListCategoriesService);
 
     const allCategories = await listCategoriesService.execute();
 
