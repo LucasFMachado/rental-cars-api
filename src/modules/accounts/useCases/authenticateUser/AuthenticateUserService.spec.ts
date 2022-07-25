@@ -33,7 +33,17 @@ describe('Authenticate user', () => {
     expect(result).toHaveProperty('token');
   });
 
-  it('Should not be able to athenticate a nonexistent user', () => {
+  // it('should not be able to authenticate a none existent user ', async () => {
+  //   await expect(
+  //     authenticateUserService.execute({
+  //       email: 'maluco ta doido',
+
+  //       password: '123',
+  //     }),
+  //   ).rejects.toBeInstanceOf(AppError);
+  // });
+
+  it('Should not be able to athenticate a none existent user', async () => {
     const user: ICreateUserDTO = {
       name: 'User name test',
       email: 'username@test.com',
@@ -41,29 +51,29 @@ describe('Authenticate user', () => {
       driver_licence: '0000000',
     };
 
-    expect(async () => {
-      await authenticateUserService.execute({
+    await expect(
+      authenticateUserService.execute({
         email: user.email,
         password: user.password,
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('Should not be able to athenticate with incorrect password', () => {
-    expect(async () => {
-      const user: ICreateUserDTO = {
-        name: 'User name test',
-        email: 'username@test.com',
-        password: '1234',
-        driver_licence: '0000000',
-      };
+  it('Should not be able to athenticate with incorrect password', async () => {
+    const user: ICreateUserDTO = {
+      name: 'User name test',
+      email: 'username@test.com',
+      password: '0000000',
+      driver_licence: '0000000',
+    };
 
-      await createUserService.execute(user);
+    await createUserService.execute(user);
 
-      await authenticateUserService.execute({
-        email: user.name,
+    await expect(
+      authenticateUserService.execute({
+        email: user.email,
         password: 'incorrectPassword',
-      });
-    }).rejects.toBeInstanceOf(AppError);
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
