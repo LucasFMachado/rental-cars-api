@@ -1,6 +1,7 @@
-import { AppError } from '../../../../errors/AppError';
-import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
-import { UsersRepositoryInMemory } from '../../repositories/in-memory/UsersRepositoryInMemory';
+import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
+import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory';
+import { AppError } from '@shared/errors/AppError';
+
 import { CreateUserService } from '../createUser/CreateUserService';
 import { AuthenticateUserService } from './AuthenticateUserService';
 
@@ -32,16 +33,6 @@ describe('Authenticate user', () => {
 
     expect(result).toHaveProperty('token');
   });
-
-  // it('should not be able to authenticate a none existent user ', async () => {
-  //   await expect(
-  //     authenticateUserService.execute({
-  //       email: 'maluco ta doido',
-
-  //       password: '123',
-  //     }),
-  //   ).rejects.toBeInstanceOf(AppError);
-  // });
 
   it('Should not be able to athenticate a none existent user', async () => {
     const user: ICreateUserDTO = {
