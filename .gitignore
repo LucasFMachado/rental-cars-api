@@ -6,4 +6,4 @@ dist
 # exclude avery files on tmp/avatar
 tmp/avatar/*
 # exception to the .gitkeep
-!tmp/avatar/.gitkeep
+!tmp/*/.gitkeep
