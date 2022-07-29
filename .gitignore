@@ -4,6 +4,6 @@ dist
 .env
 
 # exclude avery files on tmp/avatar
-tmp/avatar/*
+tmp/*/*
 # exception to the .gitkeep
 !tmp/*/.gitkeep
