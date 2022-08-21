@@ -51,6 +51,6 @@ describe('Create car specification', () => {
 
     await expect(
       createCarSpecificationsService.execute({ car_id, specifications_id }),
-    ).rejects.toBeInstanceOf(AppError);
+    ).rejects.toEqual(new AppError('Car does not exists!'));
   });
 });

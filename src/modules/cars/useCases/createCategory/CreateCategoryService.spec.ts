@@ -28,15 +28,15 @@ describe('Create category', () => {
   });
 
   it('Should not be able to create a new category with duplicated name', async () => {
-    expect(async () => {
-      const category = {
-        name: 'Category name test',
-        description: 'Category description test',
-      };
+    const category = {
+      name: 'Category name test',
+      description: 'Category description test',
+    };
 
-      await createCategoryService.execute(category);
+    await createCategoryService.execute(category);
 
-      await createCategoryService.execute(category);
-    }).rejects.toBeInstanceOf(AppError);
+    await expect(createCategoryService.execute(category)).rejects.toEqual(
+      new AppError('Category already exists!'),
+    );
   });
 });
