@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
+import auth from '@config/auth';
 import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository';
+import { UsersTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UsersTokensRepository';
 import { AppError } from '@shared/errors/AppError';
 
 interface ITokenPayload {
@@ -22,10 +24,7 @@ export async function ensureAuthenticated(
   const [, token] = authHeader.split(' ');
 
   try {
-    const { sub: user_id } = verify(
-      token,
-      'e31b8c2f75a39667a09205d87be00783',
-    ) as ITokenPayload;
+    const { sub: user_id } = verify(token, auth.token_secret) as ITokenPayload;
 
     const usersRepository = new UsersRepository();
     const user = usersRepository.findById(user_id);

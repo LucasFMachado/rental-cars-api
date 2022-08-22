@@ -1,5 +1,7 @@
 import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
 import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory';
+import { UsersTokensRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersTokensRepositoryInMemory';
+import { DateProvider } from '@shared/container/providers/DateProvider/DateProvider';
 import { AppError } from '@shared/errors/AppError';
 
 import { CreateUserService } from '../createUser/CreateUserService';
@@ -8,11 +10,19 @@ import { AuthenticateUserService } from './AuthenticateUserService';
 let authenticateUserService: AuthenticateUserService;
 let createUserService: CreateUserService;
 let usersRepository: UsersRepositoryInMemory;
+let usersTokensRepository: UsersTokensRepositoryInMemory;
+let dateProvider: DateProvider;
 
 describe('Authenticate user', () => {
   beforeEach(() => {
     usersRepository = new UsersRepositoryInMemory();
-    authenticateUserService = new AuthenticateUserService(usersRepository);
+    usersTokensRepository = new UsersTokensRepositoryInMemory();
+    dateProvider = new DateProvider();
+    authenticateUserService = new AuthenticateUserService(
+      usersRepository,
+      usersTokensRepository,
+      dateProvider,
+    );
     createUserService = new CreateUserService(usersRepository);
   });
 
